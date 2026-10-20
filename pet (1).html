@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pet｜更懂主人，也懂寵物 - AI 寵物照護品牌</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js for Health & Weight Tracking -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Fonts Inter & Noto Sans TC -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        petPrimary: '#F97316', // Warm Orange
+                        petSecondary: '#FB923C',
+                        petWarmBg: '#FFFBEB', // Light Warm Cream
+                        petDark: '#1E293B',
+                        petGreen: '#10B981',
+                        petBlue: '#0284C7'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans TC', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+        .hero-bg {
+            /* 採用優化過的邊境牧羊犬全景照片作為 Hero 區塊背景 */
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0.4) 100%), url('https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body class="bg-amber-50/30 text-slate-800 font-sans antialiased selection:bg-orange-500 selection:text-white">
+
+    <!-- 導覽列 Navbar -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-orange-100 shadow-sm transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="#home" class="flex items-center gap-3 group">
+                    <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-orange-500 to-amber-400 flex items-center justify-center text-white text-xl font-bold shadow-md shadow-orange-500/20 group-hover:scale-105 transition-transform">
+                        <i class="fa-solid font-bold fa-paw"></i>
+                    </div>
+                    <span class="text-2xl font-black tracking-tight text-slate-800">pet<span class="text-orange-500">.</span></span>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="text-sm font-medium text-slate-600 hover:text-orange-500 transition-colors">首頁</a>
+                    <a href="#about" class="text-sm font-medium text-slate-600 hover:text-orange-500 transition-colors">關於 pet</a>
+                    <a href="#services" class="text-sm font-medium text-slate-600 hover:text-orange-500 transition-colors">AI 技術服務</a>
+                    <a href="#interactive-demo" class="text-sm font-medium text-slate-600 hover:text-orange-500 transition-colors flex items-center gap-1.5">
+                        <span class="relative flex h-2 w-2">
+                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
+                          <span class="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
+                        </span>
+                        線上體驗儀表板
+                    </a>
+                    <a href="#scenarios" class="text-sm font-medium text-slate-600 hover:text-orange-500 transition-colors">應用情境</a>
+                    <a href="#blog" class="text-sm font-medium text-slate-600 hover:text-orange-500 transition-colors">照護專欄</a>
+                    <a href="#contact" class="text-sm font-medium text-slate-600 hover:text-orange-500 transition-colors">聯絡我們</a>
+                </div>
+
+                <!-- CTA Button -->
+                <div class="hidden md:flex items-center gap-3">
+                    <a href="#interactive-demo" class="px-5 py-2.5 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-medium text-sm transition-all shadow-md shadow-orange-500/20 hover:shadow-lg hover:-translate-y-0.5">
+                        免費體驗照護工具
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="p-2 rounded-xl text-slate-600 hover:text-orange-500 hover:bg-orange-50 focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white/95 border-b border-orange-100 px-4 pt-2 pb-6 space-y-3">
+            <a href="#home" class="mobile-link block px-3 py-2 rounded-lg text-slate-700 font-medium hover:bg-orange-50 hover:text-orange-500">首頁</a>
+            <a href="#about" class="mobile-link block px-3 py-2 rounded-lg text-slate-700 font-medium hover:bg-orange-50 hover:text-orange-500">關於 pet</a>
+            <a href="#services" class="mobile-link block px-3 py-2 rounded-lg text-slate-700 font-medium hover:bg-orange-50 hover:text-orange-500">AI 技術服務</a>
+            <a href="#interactive-demo" class="mobile-link block px-3 py-2 rounded-lg text-orange-600 font-semibold hover:bg-orange-50">線上體驗儀表板</a>
+            <a href="#scenarios" class="mobile-link block px-3 py-2 rounded-lg text-slate-700 font-medium hover:bg-orange-50 hover:text-orange-500">應用情境</a>
+            <a href="#blog" class="mobile-link block px-3 py-2 rounded-lg text-slate-700 font-medium hover:bg-orange-50 hover:text-orange-500">照護專欄</a>
+            <a href="#contact" class="mobile-link block px-3 py-2 rounded-lg text-slate-700 font-medium hover:bg-orange-50 hover:text-orange-500">聯絡我們</a>
+            <a href="#interactive-demo" class="mobile-link block w-full text-center px-4 py-2.5 rounded-xl bg-orange-500 text-white font-medium shadow-md shadow-orange-500/20">
+                免費體驗照護工具
+            </a>
+        </div>
+    </nav>
+
+    <!-- 01｜首頁 Hero Section -->
+    <section id="home" class="pt-28 pb-16 md:pt-36 md:pb-24 hero-bg relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-100 text-orange-700 text-xs font-semibold tracking-wide border border-orange-200 shadow-sm">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> 智慧 AI 寵物健康管家
+                    </div>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-tight">
+                        更懂主人，<br class="hidden sm:inline" /><span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-500">也懂寵物</span>
+                    </h1>
+                    <p class="text-lg sm:text-xl font-medium text-slate-700 max-w-2xl">
+                        用 AI 串起日常紀錄，讓每一次照護更有依據。
+                    </p>
+                    <p class="text-slate-600 leading-relaxed max-w-xl mx-auto lg:mx-0">
+                        從體重、排泄時間到用藥與回診提醒，pet 協助你整合寵物的健康紀錄與照護支出，減少繁瑣管理，把更多時間留給溫暖陪伴。
+                    </p>
+                    <div class="pt-4 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <a href="#interactive-demo" class="px-7 py-3.5 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-semibold shadow-lg shadow-orange-500/30 hover:shadow-xl transition-all text-center flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-play text-xs"></i> 探索服務與體驗
+                        </a>
+                        <a href="#contact" class="px-7 py-3.5 rounded-xl bg-white hover:bg-slate-50 text-slate-800 font-semibold border border-slate-200 shadow-sm transition-all text-center">
+                            聯絡我們
+                        </a>
+                    </div>
+
+                    <!-- Quick Highlight Stats -->
+                    <div class="pt-8 grid grid-cols-3 gap-4 border-t border-slate-200/60 max-w-lg mx-auto lg:mx-0 text-center lg:text-left">
+                        <div>
+                            <div class="text-2xl font-bold text-slate-900">98%</div>
+                            <div class="text-xs text-slate-500">照護遺漏降低</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold text-slate-900">35 min</div>
+                            <div class="text-xs text-slate-500">每日省下紀錄時間</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold text-slate-900">10,000+</div>
+                            <div class="text-xs text-slate-500">毛孩幸福守護</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visual Hero Banner / Mock Card -->
+                <div class="lg:col-span-5 relative">
+                    <div class="relative mx-auto max-w-md lg:max-w-none">
+                        <!-- Pet Showcase Image with Glass Overlay -->
+                        <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white h-96">
+                            <!-- Hero 主圖更新為邊境牧羊犬特寫照片 -->
+                            <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=800&q=80" alt="Border Collie Pet" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                            
+                            <!-- Floating Floating AI Card 1 -->
+                            <div class="absolute top-6 left-6 right-6 glass-card p-4 rounded-2xl shadow-lg border border-white/60 animate-bounce-slow">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-full bg-emerald-500/10 text-emerald-600 flex items-center justify-center font-bold">
+                                        <i class="fa-solid fa-bell"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-xs font-semibold text-slate-800">今日回診與用藥提醒</span>
+                                            <span class="text-[10px] text-emerald-600 font-semibold bg-emerald-50 px-2 py-0.5 rounded-full">AI 提醒</span>
+                                        </div>
+                                        <p class="text-xs text-slate-500 mt-0.5">預約時間：15:00 點耳藥 / 康和動物醫院</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Floating Card 2: Health Pulse -->
+                            <div class="absolute bottom-6 left-6 right-6 glass-card p-4 rounded-2xl shadow-lg border border-white/60">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=150&q=80" alt="Mimi Cat" class="w-12 h-12 rounded-full object-cover border-2 border-orange-400">
+                                        <div>
+                                            <h4 class="text-sm font-bold text-slate-800">Mimi (英國短毛貓)</h4>
+                                            <p class="text-xs text-slate-500">體重 4.2 kg ｜ 規律指數 98%</p>
+                                        </div>
+                                    </div>
+                                    <span class="text-xs px-2.5 py-1 rounded-lg bg-orange-500 text-white font-medium">良好</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 02｜關於 pet (About Us) Section -->
+    <section id="about" class="py-20 bg-white border-y border-amber-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-orange-500 font-bold text-sm tracking-widest uppercase">ABOUT PET</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-2">讓科技貼近寵物的每一天</h2>
+                <p class="text-slate-600 mt-4 leading-relaxed">
+                    pet 專注於將 AI 科技融入寵物日常照護，讓主人更容易理解毛孩的需求。我們關注飲食、活動與身體狀況中的細微變化，致力於將零散的生活紀錄，轉化為清楚、有意義的照護線索。
+                </p>
+            </div>
+
+            <!-- 3 Core Pillars -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-amber-50/50 rounded-3xl p-8 border border-orange-100/60 hover:shadow-xl hover:-translate-y-1 transition-all">
+                    <div class="w-14 h-14 rounded-2xl bg-orange-500 text-white flex items-center justify-center text-2xl mb-6 shadow-md shadow-orange-500/20">
+                        <i class="fa-solid fa-magnifying-glass-heart"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">我們解決的問題</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        面對寵物無法清楚表達不適、主人難以持續掌握變化的挑戰，我們從實際生活需求出發，探索直覺、實用的解決方案，讓紀錄更容易、提醒更即時、資訊更好理解。
+                    </p>
+                </div>
+
+                <div class="bg-amber-50/50 rounded-3xl p-8 border border-orange-100/60 hover:shadow-xl hover:-translate-y-1 transition-all">
+                    <div class="w-14 h-14 rounded-2xl bg-amber-500 text-white flex items-center justify-center text-2xl mb-6 shadow-md shadow-amber-500/20">
+                        <i class="fa-solid fa-heart-pulse"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">品牌核心信念</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        我們相信，科技的價值在於解決真實問題。透過持續觀察、完整記錄與有效溝通，pet 希望成為主人日常照護的得力助手，讓每一次科技進步，都成為更細緻的陪伴。
+                    </p>
+                </div>
+
+                <div class="bg-amber-50/50 rounded-3xl p-8 border border-orange-100/60 hover:shadow-xl hover:-translate-y-1 transition-all">
+                    <div class="w-14 h-14 rounded-2xl bg-emerald-500 text-white flex items-center justify-center text-2xl mb-6 shadow-md shadow-emerald-500/20">
+                        <i class="fa-solid fa-house-chimney-user"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">優雅居家照護體驗</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        打造融合現代居家美學與智慧管理的無縫體驗，透過手機與跨平台同步，讓全家成員都能同步掌握寶貝寵物的健康生活全貌。
+                    </p>
+                </div>
+            </div>
+
+            <!-- Home & Pet Lifestyle Banner -->
+            <div class="mt-16 rounded-3xl overflow-hidden shadow-xl relative grid grid-cols-1 md:grid-cols-2">
+                <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=1000&q=80" alt="Dog Home Lifestyle" class="w-full h-80 md:h-auto object-cover">
+                <div class="bg-slate-900 text-white p-8 sm:p-12 flex flex-col justify-center">
+                    <span class="text-orange-400 text-xs font-bold uppercase tracking-wider mb-2">INTELLIGENT PET CARE</span>
+                    <h3 class="text-2xl sm:text-3xl font-bold mb-4">溫暖陪伴，讓照護不再零散</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed mb-6">
+                        無論是每日飲食、體重微幅起伏，或是例行疫苗接種與回診，pet AI 為您串起所有關鍵片段，成為您寵物健康最可靠的守護者。
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <div class="flex -space-x-2">
+                            <img class="inline-block h-10 w-10 rounded-full ring-2 ring-slate-900 object-cover" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="User Avatar">
+                            <img class="inline-block h-10 w-10 rounded-full ring-2 ring-slate-900 object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" alt="User Avatar">
+                            <img class="inline-block h-10 w-10 rounded-full ring-2 ring-slate-900 object-cover" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80" alt="User Avatar">
+                        </div>
+                        <div class="text-xs text-slate-400">
+                            已獲得 <span class="text-white font-bold">10,000+</span> 寵物主人的信賴與支持
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 03｜AI 技術服務 Section -->
+    <section id="services" class="py-20 bg-amber-50/40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-orange-500 font-bold text-sm tracking-widest uppercase">AI SERVICES</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-2">少一點繁瑣管理，多一點安心陪伴</h2>
+                <p class="text-slate-600 mt-4 leading-relaxed">
+                    pet 以 AI 輔助整理日常照護資訊，搭配紀錄與提醒功能，協助主人掌握重要事項，提升照護效率。
+                </p>
+            </div>
+
+            <!-- Grid of 6 Core Modules -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- 1. 體重紀錄 -->
+                <div class="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition-all group">
+                    <div class="w-12 h-12 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-weight-scale"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">體重紀錄</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                        持續記錄體重，呈現歷次變化趨勢，協助主人追蹤寵物的身體狀況與體態控制。
+                    </p>
+                    <a href="#interactive-demo" onclick="switchDemoTab('weight')" class="text-xs font-semibold text-orange-500 hover:text-orange-600 inline-flex items-center gap-1">
+                        馬上體驗 <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </a>
+                </div>
+
+                <!-- 2. 回診紀錄 -->
+                <div class="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition-all group">
+                    <div class="w-12 h-12 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-notes-medical"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">回診紀錄</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                        集中整理就診日期、獸醫叮囑與後續安排，方便隨時查閱與向醫療團隊溝通。
+                    </p>
+                    <a href="#interactive-demo" onclick="switchDemoTab('clinic')" class="text-xs font-semibold text-blue-500 hover:text-blue-600 inline-flex items-center gap-1">
+                        馬上體驗 <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </a>
+                </div>
+
+                <!-- 3. 排泄時間紀錄 -->
+                <div class="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition-all group">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-clock"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">排泄時間紀錄</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                        記錄排泄時間與型態，逐步建立日常規律，協助主人第一時間留意健康異常變化。
+                    </p>
+                    <a href="#interactive-demo" onclick="switchDemoTab('clinic')" class="text-xs font-semibold text-amber-500 hover:text-amber-600 inline-flex items-center gap-1">
+                        了解功能 <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </a>
+                </div>
+
+                <!-- 4. 疫苗與驅蟲提醒 -->
+                <div class="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition-all group">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-syringe"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">疫苗與驅蟲提醒</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                        智能管理疫苗接種與驅蟲時程，自動推播推播，減少忙碌生活中的遺漏風險。
+                    </p>
+                    <a href="#interactive-demo" onclick="switchDemoTab('vaccine')" class="text-xs font-semibold text-emerald-500 hover:text-emerald-600 inline-flex items-center gap-1">
+                        馬上體驗 <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </a>
+                </div>
+
+                <!-- 5. 照護支出記帳 -->
+                <div class="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition-all group">
+                    <div class="w-12 h-12 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-receipt"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">照護支出記帳</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                        整理醫療、飲食與用品費用，圓餅圖清晰呈現，讓支出更透明、預算更好安排。
+                    </p>
+                    <a href="#interactive-demo" onclick="switchDemoTab('expense')" class="text-xs font-semibold text-purple-500 hover:text-purple-600 inline-flex items-center gap-1">
+                        馬上體驗 <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </a>
+                </div>
+
+                <!-- 6. 用藥與回診提醒 -->
+                <div class="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition-all group">
+                    <div class="w-12 h-12 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-pills"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">用藥與回診提醒</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                        彈性設定用藥及回診通知，協助主人按時完成關鍵照護事項，照護無縫接軌。
+                    </p>
+                    <a href="#interactive-demo" onclick="switchDemoTab('clinic')" class="text-xs font-semibold text-rose-500 hover:text-rose-600 inline-flex items-center gap-1">
+                        馬上體驗 <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </a>
+                </div>
+
+            </div>
+
+            <!-- Disclaimer Box -->
+            <div class="mt-12 bg-orange-100/60 border border-orange-200/80 rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <div class="w-10 h-10 rounded-xl bg-orange-500 text-white flex-shrink-0 flex items-center justify-center text-lg">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <div class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                    <span class="font-bold text-slate-900">💡 服務效益與免責聲明：</span>
+                    集中資訊，減少查找時間；運用提醒，降低遺漏機會；追蹤支出，掌握照護成本。pet 健康紀錄與提醒功能用於輔助日常照護，診斷與治療仍須由專業獸醫師判斷。
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 互動體驗儀表板 Interactive Tool Demo -->
+    <section id="interactive-demo" class="py-20 bg-slate-900 text-white relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="text-orange-400 font-bold text-sm tracking-widest uppercase">INTERACTIVE DEMO</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-2">線上實時體驗 pet AI 照護儀表板</h2>
+                <p class="text-slate-400 mt-3 text-sm">
+                    點選下方分頁，親自新增寵物體重、回診時間、疫苗時程與記帳，體驗流暢的照護管理。
+                </p>
+            </div>
+
+            <!-- Demo Container -->
+            <div class="bg-slate-800 rounded-3xl border border-slate-700 overflow-hidden shadow-2xl">
+                <!-- Top Control Bar / Tabs -->
+                <div class="bg-slate-850 p-4 border-b border-slate-700/80 flex flex-wrap gap-2 justify-center sm:justify-start">
+                    <button onclick="switchDemoTab('weight')" id="tab-btn-weight" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-orange-500 text-white">
+                        <i class="fa-solid fa-weight-scale mr-1.5"></i> 體重紀錄與分析
+                    </button>
+                    <button onclick="switchDemoTab('clinic')" id="tab-btn-clinic" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-slate-700 text-slate-300 hover:bg-slate-600">
+                        <i class="fa-solid fa-stethoscope mr-1.5"></i> 回診與用藥
+                    </button>
+                    <button onclick="switchDemoTab('vaccine')" id="tab-btn-vaccine" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-slate-700 text-slate-300 hover:bg-slate-600">
+                        <i class="fa-solid fa-syringe mr-1.5"></i> 疫苗驅蟲提醒
+                    </button>
+                    <button onclick="switchDemoTab('expense')" id="tab-btn-expense" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-slate-700 text-slate-300 hover:bg-slate-600">
+                        <i class="fa-solid fa-wallet mr-1.5"></i> 照護支出記帳
+                    </button>
+                </div>
+
+                <div class="p-6 sm:p-8">
+
+                    <!-- Tab 1: 體重紀錄 -->
+                    <div id="tab-content-weight" class="demo-tab-panel">
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                            <div class="lg:col-span-5 space-y-4">
+                                <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                                    <i class="fa-solid fa-plus-circle text-orange-400"></i> 新增體重紀錄
+                                </h3>
+                                <form id="weight-form" class="space-y-3 bg-slate-900/60 p-4 rounded-2xl border border-slate-700">
+                                    <div>
+                                        <label class="block text-xs font-medium text-slate-400 mb-1">日期</label>
+                                        <input type="date" id="weight-date" required class="w-full bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-orange-500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-medium text-slate-400 mb-1">體重 (kg)</label>
+                                        <input type="number" step="0.1" id="weight-val" placeholder="例如: 4.5" required class="w-full bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-orange-500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-medium text-slate-400 mb-1">備註 (如：飲食微調)</label>
+                                        <input type="text" id="weight-note" placeholder="如：換吃低卡飼料" class="w-full bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-orange-500">
+                                    </div>
+                                    <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-2.5 rounded-xl text-sm transition-all shadow-md shadow-orange-500/20">
+                                        儲存體重資料
+                                    </button>
+                                </form>
+                            </div>
+                            <div class="lg:col-span-7 bg-slate-900/80 p-5 rounded-2xl border border-slate-700">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h4 class="text-sm font-semibold text-slate-300">體重歷史趨勢圖 (kg)</h4>
+                                    <span class="text-xs text-orange-400 bg-orange-500/10 px-2.5 py-1 rounded-full border border-orange-500/20">AI 體重穩定</span>
+                                </div>
+                                <div class="h-64 relative">
+                                    <canvas id="weightChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab 2: 回診紀錄與用藥 -->
+                    <div id="tab-content-clinic" class="demo-tab-panel hidden">
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                            <div class="lg:col-span-5 space-y-4">
+                                <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                                    <i class="fa-solid fa-notes-medical text-blue-400"></i> 新增回診 / 用藥紀錄
+                                </h3>
+                                <form id="clinic-form" class="space-y-3 bg-slate-900/60 p-4 rounded-2xl border border-slate-700">
+                                    <div>
+                                        <label class="block text-xs font-medium text-slate-400 mb-1">就診日期</label>
+                                        <input type="date" id="clinic-date" required class="w-full bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-medium text-slate-400 mb-1">診所名稱與醫師</label>
+                                        <input type="text" id="clinic-name" placeholder="如：康和動物醫院 - 王醫師" required class="w-full bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-medium text-slate-400 mb-1">醫囑與用藥說明</label>
+                                        <textarea id="clinic-note" rows="2" placeholder="如：早晚點眼藥水，一週後複診" class="w-full bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500"></textarea>
+                                    </div>
+                                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-xl text-sm transition-all shadow-md shadow-blue-500/20">
+                                        新增回診卡片
+                                    </button>
+                                </form>
+                            </div>
+                            <div class="lg:col-span-7 space-y-3">
+                                <h4 class="text-sm font-semibold text-slate-300 mb-2">歷史診斷與後續安排</h4>
+                                <div id="clinic-list" class="space-y-3 max-h-80 overflow-y-auto pr-1">
+                                    <!-- Dynamic items insert here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab 3: 疫苗與驅蟲 -->
+                    <div id="tab-content-vaccine" class="demo-tab-panel hidden">
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                            <div class="lg:col-span-5 space-y-4">
+                                <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                                    <i class="fa-solid fa-syringe text-emerald-400"></i> 設定疫苗 / 驅蟲提醒
+                                </h3>
+                                <form id="vaccine-form" class="space-y-3 bg-slate-900/60 p-4 rounded-2xl border border-slate-700">
+                                    <div>
+                                        <label class="block text-xs font-medium text-slate-400 mb-1">項目類別</label>
+                                        <select id="vaccine-type" class="w-full bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500">
+                                            <option value="核心三合一疫苗">核心三合一/五合一疫苗</option>
+                                            <option value="狂犬病疫苗">狂犬病疫苗</option>
+                                            <option value="體內外滴劑驅蟲">體內外滴劑驅蟲</option>
+                                            <option value="洗牙與齒科保健">洗牙與齒科保健</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-medium text-slate-400 mb-1">預計施打 / 施藥日期</label>
+                                        <input type="date" id="vaccine-date" required class="w-full bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500">
+                                    </div>
+                                    <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2.5 rounded-xl text-sm transition-all shadow-md shadow-emerald-500/20">
+                                        加入 AI 時程提醒
+                                    </button>
+                                </form>
+                            </div>
+                            <div class="lg:col-span-7 space-y-3">
+                                <h4 class="text-sm font-semibold text-slate-300 mb-2">排程提醒清單</h4>
+                                <div id="vaccine-list" class="space-y-3 max-h-80 overflow-y-auto pr-1">
+                                    <!-- Dynamic items insert here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab 4: 照護支出記帳 -->
+                    <div id="tab-content-expense" class="demo-tab-panel hidden">
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                            <div class="lg:col-span-5 space-y-4">
+                                <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                                    <i class="fa-solid fa-receipt text-purple-400"></i> 新增寵物消費
+                                </h3>
+                                <form id="expense-form" class="space-y-3 bg-slate-900/60 p-4 rounded-2xl border border-slate-700">
+                                    <div>
+                                        <label class="block text-xs font-medium text-slate-400 mb-1">消費類別</label>
+                                        <select id="expense-cat" class="w-full bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500">
+                                            <option value="醫療與健檢">醫療與健檢</option>
+                                            <option value="主食與副食">主食與副食</option>
+                                            <option value="玩具與用品">玩具與用品</option>
+                                            <option value="美容與洗澡">美容與洗澡</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-medium text-slate-400 mb-1">金額 (NT$)</label>
+                                        <input type="number" id="expense-amount" placeholder="如: 1200" required class="w-full bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500">
+                                    </div>
+                                    <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-medium py-2.5 rounded-xl text-sm transition-all shadow-md shadow-purple-500/20">
+                                        新增記帳
+                                    </button>
+                                </form>
+                            </div>
+                            <div class="lg:col-span-7 bg-slate-900/80 p-5 rounded-2xl border border-slate-700">
+                                <h4 class="text-sm font-semibold text-slate-300 mb-4">本月照護支出比例</h4>
+                                <div class="h-60 relative flex items-center justify-center">
+                                    <canvas id="expenseChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 04｜應用情境與案例 Section -->
+    <section id="scenarios" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-orange-500 font-bold text-sm tracking-widest uppercase">SCENARIOS & CASES</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-2">從日常需求出發，看見科技的實際價值</h2>
+                <p class="text-slate-600 mt-4 leading-relaxed">
+                    無論是日常保養還是突發看診，pet 均能完美契合主人真實的生活場景。
+                </p>
+            </div>
+
+            <!-- Scenarios Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Card 1 -->
+                <div class="bg-amber-50/40 rounded-2xl p-6 border border-amber-100/80 relative flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 rounded-xl bg-orange-500 text-white flex items-center justify-center text-lg font-bold mb-4">01</div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-2">日常照護</h3>
+                        <p class="text-slate-600 text-xs leading-relaxed">
+                            整合體重與排泄時間紀錄，隨時查閱近期健康趨勢變化，不漏掉任何細微異狀。
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-amber-200/50 flex items-center text-xs font-semibold text-orange-600">
+                        <i class="fa-solid fa-check-circle mr-1.5"></i> 建立日常規律
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-amber-50/40 rounded-2xl p-6 border border-amber-100/80 relative flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 rounded-xl bg-blue-500 text-white flex items-center justify-center text-lg font-bold mb-4">02</div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-2">就診準備</h3>
+                        <p class="text-slate-600 text-xs leading-relaxed">
+                            快速整理歷次健康、食慾與回診資訊，協助精準向獸醫說明毛孩過往狀況。
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-amber-200/50 flex items-center text-xs font-semibold text-blue-600">
+                        <i class="fa-solid fa-check-circle mr-1.5"></i> 醫病溝通無障礙
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-amber-50/40 rounded-2xl p-6 border border-amber-100/80 relative flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center text-lg font-bold mb-4">03</div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-2">療程追蹤</h3>
+                        <p class="text-slate-600 text-xs leading-relaxed">
+                            搭配用藥及回診提醒，輕鬆掌握後續照護安排，讓毛孩療程更順利恢復。
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-amber-200/50 flex items-center text-xs font-semibold text-emerald-600">
+                        <i class="fa-solid fa-check-circle mr-1.5"></i> 定時用藥不遺漏
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="bg-amber-50/40 rounded-2xl p-6 border border-amber-100/80 relative flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 rounded-xl bg-purple-500 text-white flex items-center justify-center text-lg font-bold mb-4">04</div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-2">預算管理</h3>
+                        <p class="text-slate-600 text-xs leading-relaxed">
+                            分類追蹤照護支出，理性規劃每月寵物預算，陪伴毛孩無後顧之憂。
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-amber-200/50 flex items-center text-xs font-semibold text-purple-600">
+                        <i class="fa-solid fa-check-circle mr-1.5"></i> 理性收支控制
+                    </div>
+                </div>
+            </div>
+
+            <!-- Real Case Highlight -->
+            <div class="mt-16 bg-slate-900 rounded-3xl p-8 sm:p-12 text-white grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-7 space-y-4">
+                    <span class="text-orange-400 font-bold text-xs uppercase tracking-wider">SUCCESS CASE</span>
+                    <h3 class="text-2xl sm:text-3xl font-bold">正式成功案例：柴犬「波波」的慢性病管理</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        主人原本面臨照護紀錄零散、常遺漏回診提醒與醫療開銷混亂等痛點。透過 pet 建立自動化紀錄與提醒流程後，回診遺漏率直接降至 0%，每月更省下近 50% 的查找整理時間！
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 pt-4">
+                        <div class="bg-slate-800 p-4 rounded-2xl border border-slate-700">
+                            <div class="text-orange-400 text-2xl font-bold">100%</div>
+                            <div class="text-xs text-slate-400">醫療按時執行率</div>
+                        </div>
+                        <div class="bg-slate-800 p-4 rounded-2xl border border-slate-700">
+                            <div class="text-amber-400 text-2xl font-bold">-50%</div>
+                            <div class="text-xs text-slate-400">照護紀錄負擔時間</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:col-span-5">
+                    <img src="https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?auto=format&fit=crop&w=800&q=80" alt="Shiba Inu Dog" class="rounded-2xl shadow-xl w-full h-64 object-cover border-2 border-slate-700">
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 05｜部落格 (Blog Section) -->
+    <section id="blog" class="py-20 bg-amber-50/30 border-t border-amber-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-orange-500 font-bold text-sm tracking-widest uppercase">PET CARE BLOG</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-2">把科技說清楚，讓照護更容易</h2>
+                <p class="text-slate-600 mt-4 leading-relaxed">
+                    分享 AI 應用、寵物日常紀錄方法，以及產品開發與設計思考。
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                
+                <!-- Article 1 -->
+                <article class="bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between">
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=500&q=80" alt="Blog Post" class="w-full h-44 object-cover">
+                        <div class="p-5">
+                            <span class="text-[10px] font-bold text-orange-600 bg-orange-50 px-2.5 py-1 rounded-full">照護指南</span>
+                            <h3 class="font-bold text-slate-900 text-base mt-3 mb-2 leading-snug hover:text-orange-500 transition-colors cursor-pointer">
+                                如何建立容易持續的寵物健康紀錄？
+                            </h3>
+                            <p class="text-slate-500 text-xs leading-relaxed">
+                                擺脫繁重的寫日記習慣，掌握 3 個自動化紀錄心法，隨手紀錄毛孩關鍵數據...
+                            </p>
+                        </div>
+                    </div>
+                    <div class="p-5 pt-0 text-xs text-slate-400">
+                        2026-10-12 ｜ 5 分鐘閱讀
+                    </div>
+                </article>
+
+                <!-- Article 2 -->
+                <article class="bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between">
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1576201836106-db1758fd1c97?auto=format&fit=crop&w=500&q=80" alt="Blog Post" class="w-full h-44 object-cover">
+                        <div class="p-5">
+                            <span class="text-[10px] font-bold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full">效率管理</span>
+                            <h3 class="font-bold text-slate-900 text-base mt-3 mb-2 leading-snug hover:text-orange-500 transition-colors cursor-pointer">
+                                體重、回診與用藥資訊，如何整理更有效率？
+                            </h3>
+                            <p class="text-slate-500 text-xs leading-relaxed">
+                                多隻寵物家庭的照護救星！教你如何善用數位卡片整理混亂的獸醫醫囑...
+                            </p>
+                        </div>
+                    </div>
+                    <div class="p-5 pt-0 text-xs text-slate-400">
+                        2026-10-08 ｜ 4 分鐘閱讀
+                    </div>
+                </article>
+
+                <!-- Article 3 -->
+                <article class="bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between">
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1555685812-4b943f1cb0eb?auto=format&fit=crop&w=500&q=80" alt="Blog Post" class="w-full h-44 object-cover">
+                        <div class="p-5">
+                            <span class="text-[10px] font-bold text-purple-600 bg-purple-50 px-2.5 py-1 rounded-full">理財規劃</span>
+                            <h3 class="font-bold text-slate-900 text-base mt-3 mb-2 leading-snug hover:text-orange-500 transition-colors cursor-pointer">
+                                用記帳了解寵物照護支出，做更理智的預算規劃
+                            </h3>
+                            <p class="text-slate-500 text-xs leading-relaxed">
+                                從飼料罐頭到突發診療開銷，分析寵物養育成本與備用金準備比例...
+                            </p>
+                        </div>
+                    </div>
+                    <div class="p-5 pt-0 text-xs text-slate-400">
+                        2026-09-28 ｜ 6 分鐘閱讀
+                    </div>
+                </article>
+
+                <!-- Article 4 -->
+                <article class="bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between">
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=500&q=80" alt="Blog Post" class="w-full h-44 object-cover">
+                        <div class="p-5">
+                            <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full">科技深度</span>
+                            <h3 class="font-bold text-slate-900 text-base mt-3 mb-2 leading-snug hover:text-orange-500 transition-colors cursor-pointer">
+                                AI 如何協助整理寵物日常資訊與隱性健康徵兆？
+                            </h3>
+                            <p class="text-slate-500 text-xs leading-relaxed">
+                                探索機器學習如何透過寵物飲水量與體重微小變化，預警早期健康風險...
+                            </p>
+                        </div>
+                    </div>
+                    <div class="p-5 pt-0 text-xs text-slate-400">
+                        2026-09-15 ｜ 7 分鐘閱讀
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 06｜聯絡我們 (Contact Us Section) -->
+    <section id="contact" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                
+                <div class="lg:col-span-5 space-y-6">
+                    <span class="text-orange-500 font-bold text-sm tracking-widest uppercase">CONTACT US</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900">讓照護需求，成為下一個解決方案的起點</h2>
+                    <p class="text-slate-600 leading-relaxed text-sm">
+                        想了解 pet 的服務，或分享你在寵物照護中遇到的問題？歡迎留下訊息，讓我們一起探索更貼近日常的做法。
+                    </p>
+
+                    <div class="space-y-4 pt-4">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs text-slate-400">電子郵件</div>
+                                <div class="text-sm font-bold text-slate-800">hello@pet-ai-care.com</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs text-slate-400">服務據點</div>
+                                <div class="text-sm font-bold text-slate-800">台北市大安區敦化南路二段 100 號</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="lg:col-span-7">
+                    <form id="contact-form" class="bg-amber-50/40 border border-orange-100 rounded-3xl p-8 space-y-5 shadow-sm">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">姓名 (Name) *</label>
+                                <input type="text" required placeholder="請輸入您的姓名" class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-800 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">電子郵件 (Email) *</label>
+                                <input type="email" required placeholder="example@email.com" class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-800 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">聯絡目的 (Purpose)</label>
+                            <select class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-800 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500">
+                                <option value="服務諮詢">服務諮詢</option>
+                                <option value="問題反饋">問題反饋</option>
+                                <option value="合作洽談">合作洽談</option>
+                                <option value="其他">其他</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">需求說明 (Message) *</label>
+                            <textarea rows="4" required placeholder="請簡述您的需求或建議..." class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-800 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl transition-all shadow-md shadow-orange-500/20 text-sm">
+                            送出訊息
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 網站頁尾 Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 border-b border-slate-800 pb-8">
+                <!-- Brand -->
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-orange-500 flex items-center justify-center text-white text-lg font-bold">
+                        <i class="fa-solid fa-paw"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl font-black text-white">pet<span class="text-orange-500">.</span></span>
+                        <span class="text-xs text-slate-400 block sm:inline sm:ml-3">更懂主人，也懂寵物</span>
+                    </div>
+                </div>
+
+                <!-- Footer Quick Links -->
+                <div class="flex flex-wrap justify-center gap-6 text-sm">
+                    <a href="#about" class="hover:text-orange-400 transition-colors">關於 pet</a>
+                    <a href="#services" class="hover:text-orange-400 transition-colors">服務介紹</a>
+                    <a href="#interactive-demo" class="hover:text-orange-400 transition-colors">體驗儀表板</a>
+                    <a href="#contact" class="hover:text-orange-400 transition-colors">聯絡我們</a>
+                    <a href="#" onclick="alert('隱私權政策：pet 致力於保護您與毛孩的健康隱私數據。')" class="hover:text-orange-400 transition-colors">隱私權政策</a>
+                </div>
+            </div>
+
+            <div class="pt-8 text-center text-xs text-slate-500">
+                © 2026 pet. All rights reserved. 智慧寵物照護品牌
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- 1. Navigation & Mobile Menu Logic ---
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // --- 2. Interactive Demo Data & State ---
+        let weightData = {
+            labels: ['10/01', '10/05', '10/10', '10/15', '10/20'],
+            values: [4.1, 4.2, 4.15, 4.2, 4.25]
+        };
+
+        let clinicRecords = [
+            { date: '2026-10-15', name: '康和動物醫院 - 王醫師', note: '年度例行健檢，耳朵有些許輕微發炎，開立耳藥滴劑每日一次。' },
+            { date: '2026-09-01', name: '愛寵專科醫院', note: '完成洗牙與口腔保健檢查，牙齦狀況良好。' }
+        ];
+
+        let vaccineRecords = [
+            { date: '2026-11-01', type: '狂犬病疫苗 (例行追加)' },
+            { date: '2026-10-25', type: '體內外滴劑驅蟲' }
+        ];
+
+        let expenseData = {
+            categories: ['醫療與健檢', '主食與副食', '玩具與用品', '美容與洗澡'],
+            amounts: [2500, 3200, 800, 1200]
+        };
+
+        // Charts Global Instance
+        let weightChart, expenseChart;
+
+        // Initialize Charts on Window Load
+        window.onload = function() {
+            initWeightChart();
+            initExpenseChart();
+            renderClinicList();
+            renderVaccineList();
+        };
+
+        // Switch Tabs in Demo Dashboard
+        function switchDemoTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.demo-tab-panel').forEach(panel => panel.classList.add('hidden'));
+            
+            // Deactivate all buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-orange-500', 'text-white');
+                btn.classList.add('bg-slate-700', 'text-slate-300');
+            });
+
+            // Active selected
+            document.getElementById(`tab-content-${tabName}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`tab-btn-${tabName}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-slate-700', 'text-slate-300');
+                activeBtn.classList.add('bg-orange-500', 'text-white');
+            }
+        }
+
+        // --- Weight Chart Logic ---
+        function initWeightChart() {
+            const ctx = document.getElementById('weightChart').getContext('2d');
+            weightChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: weightData.labels,
+                    datasets: [{
+                        label: '體重 (kg)',
+                        data: weightData.values,
+                        borderColor: '#F97316',
+                        backgroundColor: 'rgba(249, 115, 22, 0.15)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.35,
+                        pointBackgroundColor: '#F97316',
+                        pointRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: { ticks: { color: '#94A3B8' }, grid: { color: '#334155' } },
+                        y: { ticks: { color: '#94A3B8' }, grid: { color: '#334155' }, min: 3.5, max: 5.0 }
+                    }
+                }
+            });
+        }
+
+        document.getElementById('weight-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const dateVal = document.getElementById('weight-date').value;
+            const weightVal = parseFloat(document.getElementById('weight-val').value);
+
+            if (dateVal && !isNaN(weightVal)) {
+                // Shorten date string
+                const shortDate = dateVal.substring(5).replace('-', '/');
+                weightData.labels.push(shortDate);
+                weightData.values.push(weightVal);
+
+                if (weightData.labels.length > 7) {
+                    weightData.labels.shift();
+                    weightData.values.shift();
+                }
+
+                weightChart.update();
+                document.getElementById('weight-val').value = '';
+                document.getElementById('weight-note').value = '';
+                
+                showToast('體重紀錄已成功儲存！');
+            }
+        });
+
+        // --- Clinic Logic ---
+        function renderClinicList() {
+            const container = document.getElementById('clinic-list');
+            container.innerHTML = clinicRecords.map(item => `
+                <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-700/80 hover:border-blue-500/50 transition-all">
+                    <div class="flex justify-between items-start">
+                        <span class="text-xs font-bold text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded">${item.date}</span>
+                        <span class="text-xs text-slate-400">${item.name}</span>
+                    </div>
+                    <p class="text-xs text-slate-300 mt-2 leading-relaxed"><i class="fa-solid fa-notes-medical text-slate-500 mr-1"></i> ${item.note}</p>
+                </div>
+            `).join('');
+        }
+
+        document.getElementById('clinic-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const date = document.getElementById('clinic-date').value;
+            const name = document.getElementById('clinic-name').value;
+            const note = document.getElementById('clinic-note').value;
+
+            clinicRecords.unshift({ date, name, note });
+            renderClinicList();
+
+            document.getElementById('clinic-name').value = '';
+            document.getElementById('clinic-note').value = '';
+            showToast('回診紀錄已新增！');
+        });
+
+        // --- Vaccine Logic ---
+        function renderVaccineList() {
+            const container = document.getElementById('vaccine-list');
+            container.innerHTML = vaccineRecords.map(item => `
+                <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-700/80 flex items-center justify-between">
+                    <div>
+                        <div class="text-xs font-bold text-emerald-400"><i class="fa-solid fa-bell mr-1"></i> ${item.type}</div>
+                        <div class="text-xs text-slate-400 mt-1">預計日期：${item.date}</div>
+                    </div>
+                    <span class="text-[10px] text-emerald-300 bg-emerald-500/20 px-2.5 py-1 rounded-full border border-emerald-500/30">AI 監控中</span>
+                </div>
+            `).join('');
+        }
+
+        document.getElementById('vaccine-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const type = document.getElementById('vaccine-type').value;
+            const date = document.getElementById('vaccine-date').value;
+
+            vaccineRecords.unshift({ type, date });
+            renderVaccineList();
+            showToast('疫苗/驅蟲提醒已加入！');
+        });
+
+        // --- Expense Chart Logic ---
+        function initExpenseChart() {
+            const ctx = document.getElementById('expenseChart').getContext('2d');
+            expenseChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: expenseData.categories,
+                    datasets: [{
+                        data: expenseData.amounts,
+                        backgroundColor: ['#A855F7', '#F97316', '#3B82F6', '#10B981'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: { color: '#CBD5E1', font: { size: 11 } }
+                        }
+                    }
+                }
+            });
+        }
+
+        document.getElementById('expense-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const cat = document.getElementById('expense-cat').value;
+            const amt = parseInt(document.getElementById('expense-amount').value);
+
+            const idx = expenseData.categories.indexOf(cat);
+            if (idx !== -1 && !isNaN(amt)) {
+                expenseData.amounts[idx] += amt;
+                expenseChart.update();
+                document.getElementById('expense-amount').value = '';
+                showToast('已完成記帳更新！');
+            }
+        });
+
+        // --- Toast Notification Utility ---
+        function showToast(msg) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-6 right-6 z-50 bg-orange-500 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-xl flex items-center gap-2 transition-all transform translate-y-2 opacity-0';
+            toast.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${msg}`;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            }, 10);
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 2500);
+        }
+
+        // --- Contact Form Handling ---
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            showToast('訊息已成功送出！專人將儘速與您聯繫。');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
